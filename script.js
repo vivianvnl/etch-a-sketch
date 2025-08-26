@@ -1,4 +1,6 @@
 const container = document.getElementById("container");
+const setGridButton = document.getElementById("setGridButton");
+const resetGridButton = document.getElementById("resetGridButton");
 const gridPx = 800;
 let gridLength = 16;
 container.setAttribute("style", 
@@ -6,22 +8,34 @@ container.setAttribute("style",
 container.style.height = gridPx + 'px';
 container.style.width = gridPx +'px';
 
-function addSquares() {
+function createGrid() {
     for (i = 0; i < gridLength ** 2; i++) {
-        const squares = document.createElement("div");
-        squares.classList.add("squares");
-        squares.setAttribute("style", 
+        const square = document.createElement("div");
+        square.classList.add("squares");
+        square.setAttribute("style", 
         "box-sizing: border-box; background-color: white; border: 1px solid black; margin: 0; padding: 0;")
-        squares.style.height = (gridPx / gridLength) + 'px';
-        squares.style.width = (gridPx / gridLength) +'px';
-        container.appendChild(squares)
+        square.style.height = (gridPx / gridLength) + 'px';
+        square.style.width = (gridPx / gridLength) +'px';
+        container.appendChild(square)
     }
 }
-addSquares()
 
-const sqs = document.querySelectorAll(".squares");
-sqs.forEach(sq => {
+// creating the grid
+setGridButton.addEventListener("click", (e) => {
+    const removeSquares = document.querySelectorAll(".squares")
+    removeSquares.forEach(div => {
+        div.remove();
+    });
+
+    gridLength = prompt("What grid length would you like?");
+    createGrid(gridLength);
+});
+
+const squaresAll = document.querySelectorAll(".squares")
+squaresAll.forEach(sq => {
     sq.addEventListener('mouseover', () => {
     sq.style.backgroundColor = "yellow";
     });
 });
+
+createGrid(gridLength);
